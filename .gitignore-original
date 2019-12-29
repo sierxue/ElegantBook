@@ -1,6 +1,3 @@
-## Vim temparary files:
-*.swp
-
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -16,8 +13,6 @@
 .*.lb
 elegant*-cn.pdf
 elegant*-en.pdf
-elegantbook.pdf
-toolsRes.pdf
 
 ## Intermediate documents:
 *.dvi
