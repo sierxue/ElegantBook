@@ -381,7 +381,7 @@
 
 
 %%define the note and proof environment
-\RequirePackage{pifont,manfnt,bbding}
+\RequirePackage{fontawesome,tikzsymbols,marvosym,pifont,manfnt,bbding}
 % list/itemize/enumerate setting
 \RequirePackage[shortlabels]{enumitem}
 \setlist{nolistsep}
