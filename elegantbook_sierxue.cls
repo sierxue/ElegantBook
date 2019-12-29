@@ -569,6 +569,14 @@
   \ifdefstring{\ELEGANT@lang}{en}{Note}{注意}\,
 }}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
 
+\newenvironment{tip}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\faStarO\quad}\textbf{\color{second}%
+  \ifdefstring{\ELEGANT@lang}{en}{Tip}{提示}\,
+}}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
+
+\newenvironment{share}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\faThumbsOUp\quad}\textbf{\color{second}%
+  \ifdefstring{\ELEGANT@lang}{en}{Tip}{分享}\,
+}}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
+
 \newenvironment{proof}{\par\noindent\textbf{\color{second}%
   \ifdefstring{\ELEGANT@lang}{en}{Proof}{证明}\;
 }\color{black!90}\small}{
