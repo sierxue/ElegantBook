@@ -565,7 +565,7 @@
 
 
 
-\newenvironment{note}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\textdbend\quad}\textbf{\color{second}%
+\newenvironment{note}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\faWarning\quad}\textbf{\color{second}%
   \ifdefstring{\ELEGANT@lang}{en}{Note}{注意}\,
 }}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
 
