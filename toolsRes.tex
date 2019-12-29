@@ -1,0 +1,754 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[cn,11pt, simple]{elegantbook}
+
+\title{Virtualbox、Linux、Vim、\LaTeX{}、Git、Zotero}
+\subtitle{科学研究中常用的开源工具的简单介绍}
+
+\author{甘湘华}
+\institute{西南财经大学}
+\date{\today}
+\version{0.01}
+
+\extrainfo{本教程基于已经配置好所用软件的
+    {\rm Virtualbox} 虚拟机，力求尽快让技术小白能够用
+    {\rm \LaTeX{}} 写研究论文，以 及用~{\rm \lstinline{Git}}
+    工具来进行版本控制。
+    需要声明的是，作者本人也是小白一枚，请读者批判地学习本教程。
+    不当以及需改进之处，请不吝指出，谢谢！}
+
+\logo{logo.png}
+\cover{cover.jpg}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+% \thispagestyle{empty}
+
+\mainmatter
+\hypersetup{pageanchor=true}
+
+\chapter{系统设置}
+\label{cha:settings-system}
+
+\section{Virtualbox 虚拟机}%
+\label{sec:virtualbox}
+
+
+\subsection{参考资料}%
+\label{sub:virtualbox-refs}
+
+Virtualbox 虚拟机软件参考资料网址：
+\begin{itemize}
+    \item 官方网址： \href{https://www.virtualbox.org/}{https://www.virtualbox.org/}
+    \item 官方论坛： \href{https://forums.virtualbox.org/}{https://forums.virtualbox.org/}
+    \item 网络上的非官方网址和非官方教程：
+        \begin{itemize}
+            \item 如果官方网址下载虚拟机软件慢的话，
+                可以在
+                \href{https://mirror.tuna.tsinghua.edu.cn/virtualbox/6.0.14/}
+                {清华镜像}下载。
+            \item \href{https://www.jianshu.com/p/bfb4f4415411}
+                {安装 virtualbox 教程}
+                \footnote{本教程使用的虚拟机版本是 6.0.14}
+                % \footnote{本教程作者已经感谢该文作者。}
+        \end{itemize}
+\end{itemize}
+
+\subsection{常用操作}%
+\label{sub:virtualbox-tips}
+
+\subsubsection{设定共享目录}%
+\label{ssub:virtualbox-tip-share-folder}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{screenshots/Screenshot from
+  2019-11-29 17-52-45.png}
+  \caption{设定共享目录 --- 示意图 1}
+\end{figure}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{screenshots/Screenshot from
+  2019-11-29 17-53-28.png}
+  \caption{设定共享目录 --- 示意图 2}
+\end{figure}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{screenshots/Screenshot from
+  2019-11-29 17-54-41.png}
+  \caption{设定共享目录 --- 示意图 3}
+\end{figure}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{screenshots/Screenshot from
+  2019-11-29 17-55-59.png}
+  \caption{设定共享目录 --- 示意图 4}
+\end{figure}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{screenshots/Screenshot from
+  2019-11-29 17-59-22.png}
+  \caption{设定共享目录 --- 示意图 5}
+\end{figure}
+
+\subsubsection{调整虚拟机窗口大小}%
+\label{ssub:virtualbox-tip-window-size}
+
+至少有三种方法：
+\begin{enumerate}
+    \item 最大化虚拟机窗口。（在 Linux 和 Windows 上通常为点击右上角的方框，
+        在 Mac 上点击左上的放大键）
+    \item 按组合键 Host + H.（组合键在 Linux 和 Windows 上通常为右边的
+        Ctrl, 在 Mac 上通常为左边的 Command 键）
+    \item 用鼠标拖动窗口，调节窗口大小。
+\end{enumerate}
+
+\section{Linux 系统}%
+\label{sec:linux-tips}
+
+\subsection{参考资料}%
+\label{sub:linux-refs}
+
+\begin{itemize}
+    \item 官方网址： \href{https://www.linux.org/}{https://www.linux.org/}
+    \item Ubuntu ~ ~： \href{https://cn.ubuntu.com/}{https://cn.ubuntu.com/}
+    \item 社区讨论：
+        \href{https://forum.ubuntu.com.cn/}{https://forum.ubuntu.com.cn/}
+    \item 问答网站：
+        \href{https://askubuntu.com/}{https://askubuntu.com/}
+    \item Linux 教程：
+        \begin{itemize}
+            \item \lstinline{Ubuntu desktop help}
+                \footnote{按 \lstinline{F1} 即可以打开。}
+            \item \href{https://help.ubuntu.com/lts/ubuntu-help/index.html}
+                {Ubuntu 桌面指南}
+            \item \href{https://linuxtools-rst.readthedocs.io/zh_CN/latest/}
+                {Linux 工具快速教程}
+            \item \href{https://dunwu.github.io/linux-tutorial/#/}
+                {Linux 教程}
+        \end{itemize}
+\end{itemize}
+
+\subsection{Linux 系统设置}%
+\label{sub:linux-intro}
+
+
+\subsubsection{点文件~(dotfiles)配置}%
+\label{ssub:dotfiles-settings}
+
+\paragraph{点文件介绍}%
+\label{sssub:dotfiles-settings-intro}
+
+在 Unix/Linux/Mac 系统上，软件有它们各自的配置文件，通常以 ~.  开头，
+管它们叫 \emph{点文件}~(~ \texttt{dotfiles}).
+这些点文件数量多，并且所在的位置还有所不同，管理起来并不是一个容易的事情。
+一个方法是把所有的这些配置文件放进一个文件夹，对每个配置文件用命令
+\lstinline{ln -s} 链接到原来的位置。
+这个文件夹可以用 git 仓库进行管理，
+可以方便我们把一台电脑上的配置，同步到另外的电脑上。
+
+作者配置的虚拟机上使用
+\href{https://github.com/anishathalye/dotbot}{dotbot} 技术来管理 dotfiles.
+在本虚拟机的 \lstinline{~/.df/} 目录中有两个文件夹: \lstinline{dotfiles}
+中的配置文件是所有电脑中都共同拥有的; \lstinline{dotfiles-local}
+中的配置文件是某个电脑所特有的。
+建议本教程的读者在未掌握 \lstinline{dotfiles}
+的配置前，不要更改这两个文件夹中的任何文件。
+\begin{note}\label{note:vim-customized}
+    如果要对 Vim 做一些个性化的设置，可以参考 \ref{ssub:vim-config}.
+\end{note}
+
+%\subsubsection{使用本虚拟机的注意事项}%
+%\label{ssub:virtualbox-guest-ganx}
+
+\paragraph{同步点文件的 Git 仓库}%
+\label{sssub:virtualbox-guest-ganx-conf}
+
+本虚拟机的配置文件主要由以下两个仓库控制：
+\begin{itemize}
+    \item \href{https://github.com/ddpom/dotfiles}
+        {https://github.com/ddpom/dotfiles}
+    \item \href{https://github.com/ddpom/dotfiles-local}
+        {https://github.com/ddpom/dotfiles-local}
+\end{itemize}
+
+\paragraph{设置点文件仓库的更新提示}%
+\label{sssub:virtualbox-guest-ganx-conf-update-notification}
+
+两个仓库不时更新的，更新配置文件的提交实现后，会发出更新提示。
+如果你 \lstinline{watch (关注)} 了这两个仓库，就可以收到更新提示。
+设置步骤如下：
+\begin{enumerate}
+    \item 访问 \href{https://github.com/ddpom/dotfiles}
+        {https://github.com/ddpom/dotfiles}, 点击右上方
+        \lstinline{watch (关注)} 旁边的下拉菜单，选择 \lstinline{watching}.
+        如果你觉得这个仓库还有用的话，顺便点一下右边的 \lstinline{star}.
+    \item 访问 \href{https://github.com/ddpom/dotfiles-local}
+        {https://github.com/ddpom/dotfiles-local},
+        点击右上方 \lstinline{watch (关注)} 旁边的下拉菜单，
+        选择 \lstinline{watching}.
+        如果你觉得这个仓库还有用的话，顺便点一下右边的 \lstinline{star}.
+    \item 访问 \href{https://github.com/settings/notifications}
+        {https://github.com/settings/notifications},
+        配置你接收提示的选项。缺省设置下，你会在电子邮件里收到你关注的仓库的
+        提交。你还可以打钩 \lstinline{Web and Mobile} 选项。
+\end{enumerate}
+
+\paragraph{更新点文件 --- 手动方式}%
+\label{sssub:update-dotfiles-manual}
+
+\begin{enumerate}
+    \item 运行下面几个命令，更新 \href{https://github.com/ddpom/dotfiles}
+        {https://github.com/ddpom/dotfiles}:
+\begin{lstlisting}[escapeinside=``]
+cd ~/.df/dotfiles
+git checkout .
+git pull --rebase
+git submodule update --remote
+./install
+\end{lstlisting}
+    \item 运行下面几个命令，更新
+        \href{https://github.com/ddpom/dotfiles-local}
+        {https://github.com/ddpom/dotfiles-local}:
+\begin{lstlisting}[escapeinside=``]
+cd ~/.df/dotfiles-local
+git checkout .
+git pull --rebase
+git submodule update --remote
+./install
+\end{lstlisting}
+\end{enumerate}
+
+\paragraph{更新点文件 --- 自动方式}%
+\label{sssub:update-dotfiles-crontab}
+
+\begin{enumerate}
+    \item 将 ~\ref{sssub:update-dotfiles-manual}~ 中的所有命令写入
+        \lstinline{~/.df/dotfiles-local/scripts/pullDotfiles.sh}.
+        \begin{note}\label{note:update-dotfiles-crontab}
+            这一步是更新 \lstinline{dotfiles-local} 时
+            自动完成，虚拟机使用者不需要手动写入。
+        \end{note}
+    \item 运行命令 \lstinline{crontab -e}, 写入以下命令：
+\begin{lstlisting}[escapeinside=``]
+SHELL=/usr/bin/zsh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=""
+
+@hourly  /usr/bin/zsh ~/.df/dotfiles-local/scripts/pullDotfiles.sh
+\end{lstlisting}
+写入命令后，可以运行 \lstinline{crontab -l}
+来确认你刚才输入的内容是正确的。
+\begin{note}\label{note:crontab}
+    我们可以把自动更新的运行记录写入 \lstinline{log} 文件。
+    首先，运行~ \lstinline{mkdir ~/.df/log} 创建 \lstinline{log} 目录；
+    然后运行命令 \lstinline{crontab -e}, 在最后一行添加
+    \lstinline{ >> ~/.df/log/pullDotfiles.log}:
+\begin{lstlisting}[escapeinside=``]
+@hourly  /usr/bin/zsh ~/.df/dotfiles-local/scripts/pullDotfiles.sh >> ~/.df/log/pullDotfiles.log
+\end{lstlisting}
+添加以后不要断行，要确保所有的内容在一行上。
+\end{note}
+\end{enumerate}
+
+\subsection{本教程所用虚拟机的安装和设置}%
+\label{sub:virtualbox-guest-settings}
+
+\subsubsection{虚拟机的基本安装}%
+\label{ssub:linux-ubuntu}
+
+本虚拟机的系统为 Ubuntu 18.04; 安装选项为最小安装；用户名: ganx; 密码: 9;
+登录方式：自动登录。
+
+\subsubsection{安装虚拟机的 Guest Additions}%
+\label{ssub:virtualbox-guest-additions}
+\begin{enumerate}
+    \item \lstinline{sudo apt update}
+    \item \lstinline{sudo apt install build-essential gcc make perl dkms menu}
+    \item 打开安装盘，点击用于 Linux 系统的可执行文件直接安装。
+\end{enumerate}
+
+\subsubsection{在主机上设置与虚拟机的目录共享}%
+\label{ssub:vitualbox-shared-folder}
+\begin{enumerate}
+    \item \lstinline{sudo usermod -a -G vboxsf ganx}
+    \item 参考 \ref{ssub:virtualbox-tip-share-folder},
+        设置guest上和主机目录对应的共享目录 （注意: 勾选自动挂载）。
+    \item 重启虚拟主机或者运行命令 \lstinline{sudo systemctl daemon-reload},
+        共享目录生效。
+\end{enumerate}
+
+\subsubsection{Virtualbox 的其它设置}%
+\label{ssub:virtualbox-others}
+\begin{enumerate}
+    \item 调整虚拟机使用的内存大小；
+    \item 设置虚拟机的共享剪贴板选项为 \emph{双向}；
+    \item 设置用户界面。
+\end{enumerate}
+
+
+\subsubsection{安装 i-bus 拼音}%
+\label{ssub:pinyin-i-bus}
+\begin{enumerate}
+    \item \lstinline{sudo apt install ibus-libpinyin pinyin-database}
+    \item 安装中文语言。
+    \item 将 "intelligent pinyin" 加入 "Input source".
+\end{enumerate}
+
+\subsubsection{安装搜狗拼音}%
+\label{ssub:pinyin-sogou}
+\begin{enumerate}
+    \item 在 \href{https://pinyin.sogou.com/linux/}
+        {https://pinyin.sogou.com/linux/} 下载 64 位版本的安装包。
+        \footnote{安装本虚拟机时下载的版本是
+            \lstinline{sogoupinyin_2.3.1.0112_amd64.deb}
+        }
+    \item \lstinline{sudo apt -y install fcitx fcitx-bin fcitx-table-all}
+    \item \lstinline{sudo dpkg -i sogoupinyin_2.3.1.0112_amd64.deb}
+    \item \lstinline{sudo apt-get install -f}
+    \item 在系统设置中的语言设置选择缺省输入方式为 fcitx.
+\end{enumerate}
+
+\subsection{常用命令}%
+\label{sub:linux-commands}
+
+常用命令：
+\begin{enumerate}
+    \item \lstinline{cd}: 进 入某个目录; 例子：
+\begin{lstlisting}[ escapeinside=``]
+cd ~/.ssh/
+\end{lstlisting}
+    \item \lstinline{mv}: 1. 修改文件或这目录的名字; 2.
+        移动文件或者整个目录； 例子：
+\begin{lstlisting}[escapeinside=``]
+cd ~/.ssh/
+mv github_yourname_ganx github_ddpom_ganx
+mv github_yourname_ganx.pub github_ddpom_ganx.pub
+\end{lstlisting}
+\end{enumerate}
+
+\section{Vim 编辑器}%
+\label{sec:vim}
+
+\subsection{参考资料}%
+\label{sub:vim-refs}
+
+\begin{itemize}
+    \item 官方网址： \href{https://www.vim.org/}{https://www.vim.org/}
+    \item 问答网站：
+        \href{https://vi.stackexchange.com/}{https://vi.stackexchange.com/}
+    \item Vim 教程：
+        \begin{itemize}
+            \item \lstinline{vimtutor}
+                \footnote{在终端中，输入 \lstinline{vimtutor} 命令学习 Vim
+                的基本用法。}
+            \item \href{https://github.com/wsdjeg/vim-galore-zh_cn}
+                {Vim 从入门到精通}
+            \item \href{https://item.jd.com/12056490.html}
+                {Vim 使用技巧 (Pratical Vim) 第二版}
+        \end{itemize}
+\end{itemize}
+
+\subsection{常用配置}%
+\label{sub:vim-intro}
+
+\subsubsection{Vim 的配置文件}%
+\label{ssub:vim-config}
+
+本虚拟机中的配置文件为：
+\begin{lstlisting}[escapeinside=``]
+~/.df/dotfiles/vimrc
+~/.df/dotfiles-local/gvimrc
+~/.vimrc_customized
+~/.gvimrc_customized
+\end{lstlisting}
+\lstinline{vimrc} 和 \lstinline{gvimrc} 由
+\ref{sssub:virtualbox-guest-ganx-conf} 中的两个 git 仓库控制，请勿修改。
+你对本台虚拟机的特殊设置可以在 \lstinline{.vimrc_customized} 和
+\lstinline{.gvimrc_customized} 中配置。
+
+\subsubsection{Gvim 的个性化设置}%
+\label{ssub:vim-gui-config-customized}
+
+打开 \lstinline{~/.gvimrc_customized}, 进行 Gvim 的个性化设置。例如：
+\begin{lstlisting}[escapeinside=``]
+set guifont=Monospace\ 13
+set linespace=4
+\end{lstlisting}
+对于以上两个选项的设置，可以用命令 \lstinline{:h guifont} 和
+\lstinline{:h linespace} 查看帮助。
+例如，在 \lstinline{guifont} 的设置帮助中，有建议在中文系统下，使用如下配置：
+\begin{lstlisting}[escapeinside=``]
+if has("gui_gtk3")
+  set guifont=Bitstream\ Vera\ Sans\ Mono\ 12,Fixed\ 12
+  set guifontwide=Microsoft\ Yahei\ 12,WenQuanYi\ Zen\ Hei\ 12
+endif
+\end{lstlisting}
+\begin{note}\label{note:guifont}
+    在本虚拟机上，这个建议的设置不尽人意。也许在 \lstinline{Window}
+    系统上还不错。
+\end{note}
+
+\subsection{常用插件}%
+\label{sub:vim-plugins}
+
+\subsubsection{vimtex --- 用 Vim 编辑 \LaTeX{} 的利器}%
+\label{ssub:vim-plugin-vimtex}
+
+插件网址:
+\href{https://github.com/lervag/vimtex}{https://github.com/lervag/vimtex}
+
+常用操作：
+\begin{itemize}
+    \item \lstinline{\ll} 编译 \LaTeX{} 文档；
+    \item \lstinline{\lv} 正向搜索 (Forward search)
+        \footnote{打开 pdf 文档并且指向光标所在文本对应的位置。}；
+    \item \lstinline{\ll} 停止编译 (或者 \lstinline{\lk})；
+    \item \lstinline{\le} 查看错误和警告信息；
+    \item \lstinline{\lc} 清除编译中的辅助文件；
+    \item \lstinline{\lC} 清除 pdf 文件；
+    \item \lstinline{ctrl + clik} 反向搜索 (Backward/inverse search)
+        \footnote{按住 ctrl 键，点击 pdf 文档上的内容，光标就会转到 Gvim
+        上相应的位置};
+    \item 更多操作见插件 README;
+    \item 插件的详细文档可以在命令模式下用 \lstinline{h:vimtex} 命令查看。
+\end{itemize}
+
+\subsection{故障排除}%
+\label{sub:vim-troubleshooting}
+
+\subsubsection{Gvim 打开文件后不见光标}%
+\label{ssub:vim-ts-cursor}
+
+\begin{enumerate}
+    \item 最大化虚拟机窗口（参见
+        \ref{ssub:virtualbox-tip-window-size}）后打开文件，
+        若能见光标就停止，否则进入下一步。
+    \item 打开 \lstinline{~/.gvimrc_customized}, 修改
+        \lstinline{linespace} 的设置。比如，可以尝试  \lstinline{0 - 4}
+        之间的一个值。
+\end{enumerate}
+
+
+%待续
+%%Vim 的学习曲线（To do）。
+%
+%\subsection{Vim 的学习方式}%
+%\label{sub:vim-learning}
+
+\chapter{\LaTeX{} 使用教程}%
+\label{cha:latex-tips}
+
+\section*{序言}%
+\label{sec:latex-intro}
+
+\emph{使用 {\rm\LaTeX{}} 排版科技文章的优点}
+~\footnote{\href{https://github.com/HymanHuang/plutothesis/tree/master/PlutoKaiTi/a4paper}{参考文献}}
+：
+\begin{itemize}
+    \item \LaTeX{}的设计思想基于 \emph{所想即所得}，即 \emph{WYSIWYG
+        (What you see is what you mean)},
+        让你更专注于论文的思路贯通而不是繁杂的格式要求；
+    \item \LaTeX 文件为纯文本文件，有利于使用 Git 进行版本控制；
+    \item \LaTeX 的输出为符合国际文档标准的 pdf 文档，
+        在 \emph{MicroSoft Windows},
+        \emph{Mac}, \emph{Linux}~系统上是一致的，
+        有利于跨平台使用以及使用不同平台成员的团队协作；
+    \item \LaTeX 文件比~\emph{MicroSoft Word} 文件显著地小，易于传输和分享；
+    \item \LaTeX 数学公式输入排版，输出精美；
+    \item 国际期刊及会议一般都提供~\LaTeX 论文模板,使论文投稿排版更容易；
+    \item 不少高校提供符合要求的~\LaTeX{}学位论文写作模板；
+    \item 制作幻灯片的~\LaTeX 宏包~\emph{beamer}, 公式和文字输入一样方便，
+        % 没有~\emph{PowerPoint}~ 的那种繁琐公式和图片位置调整，
+        众多的默认模版供选择，一个简单命令就可切换，
+        让幻灯片制作更轻松、专业、漂亮；
+    \item  众多的文档类和宏包支持，以及强大的用户 {\bf DIY} 功能，
+          给你的感觉是``没有你做不到的，只有你想不到的''。
+    % \item  对许多忠实的~TeXer 而言，\TeX/\LaTeX 已经不仅仅是一种排版软件，
+    %     更成为一种信仰，因为它的诞生及其发展本身就是一段趋向完美的传奇。
+\end{itemize}
+
+\newpage
+\section{参考资料}%
+\label{sec:latex-refs}
+
+\LaTeX{} 参考资料网址：
+\begin{itemize}
+    \item 官方网址： \href{https://www.ctan.org/}{https://www.ctan.org/}
+    \item 问答网站：
+        \href{https://wenda.latexstudio.net/}{https://wenda.latexstudio.net/} 
+        ~
+        \href{https://tex.stackexchange.com/}{https://tex.stackexchange.com/}
+    \item 软件下载：如果官方网址下载 \lstinline{texlive.iso} 慢的话，可以在
+    \href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}
+                {清华镜像}~下载。
+    \item 数学符号： \href{books/latex-math-symbols.pdf}{速查表}~ ~
+        \href{http://detexify.kirelabs.org/classify.html} {图像识别} ~ ~
+        \href{http://mirrors .ustc.edu.cn/CTAN/info/symbols/comprehensive/symbols-a4.pdf}
+        {详细列表}
+        \footnote{如果 \lstinline{git clone} 了本仓库,
+        可以在本仓库的 \lstinline{books}
+        目录中阅读此电子书:
+        \href{books/symbols-a4.pdf}{数学符号详细列表} 。
+        由于从网页下载较慢，就放在本仓库了，感谢作者开源贡献。}
+    \item \LaTeX{} 教程：
+        \begin{itemize}
+            % \item \href{https://github.com/luong-komorebi/Begin-Latex-in-minutes/blob/master/Translation-Chinese.md}
+            %     {学习 \LaTeX{} 从现在开始 (Begin \LaTeX{} in Minutes)}
+            \item \href{https://www.latexstudio.net/archives/9377.html}
+                {30分钟从完全陌生到基本入门}
+            \item
+                \href{https://www.ctan.org/tex-archive/info/lshort/chinese}
+                {一份不太简短的LATEX介绍}
+        \href{http://mirrors.ctan.org/info/lshort/chinese/lshort-zh-cn.pdf}
+                {中文下载}
+                \footnote{如果 \lstinline{git clone} 了本仓库,
+                可以在本仓库的 \lstinline{books}
+                目录中阅读此电子书:
+                \href{books/lshort-zh-cn.pdf}{一份不太简短的LATEX介绍} 。
+                由于从网页下载较慢，就放在本仓库了，感谢作者开源贡献。}
+            \item
+                \href{https://www.ctan.org/tex-archive/info/lshort/chinese}
+                {一份简短的 LaTeX 数学指南}
+                \href{https://wenda.latexstudio.net/article-5006.html}
+                {中文下载}
+                \footnote{如果 \lstinline{git clone} 了本仓库,
+                可以在本仓库的 \lstinline{books}
+                目录中阅读此电子书:
+                \href{books/short-math-guide(cn).pdf}
+                {一份简短的 LaTeX 数学指南} 。
+                由于从网页下载较慢，就放在本仓库了，感谢作者开源贡献。}
+                \href{http://mirrors.ustc.edu.cn/CTAN/info/short-math-guide/short-math-guide.pdf}{英文下载}
+                \footnote{如果 \lstinline{git clone} 了本仓库,
+                可以在本仓库的 \lstinline{books}
+                目录中阅读此电子书:
+                \href{books/short-math-guide.pdf}
+                {Short Math Guide for \LaTeX{}} 。
+                由于从网页下载较慢，就放在本仓库了，感谢作者开源贡献。}
+            \item \href{https://github.com/huangxg/lnotes}
+                {雷太赫排版系统简介 An introduction to TeX/LaTeX
+                typesetting system}
+        \href{https://github.com/huangxg/lnotes/raw/master/lnotes2.pdf}{下载}
+                \footnote{如果 \lstinline{git clone} 了本仓库,
+                可以在本仓库的 \lstinline{books}
+                目录中阅读此电子书:
+                \href{books/lnotes2.pdf}{雷太赫排版系统简介} 。
+                由于从网页下载较慢，就放在本仓库了，感谢作者开源贡献。}
+        \end{itemize}
+\end{itemize}
+
+%\section{使用教程}%
+%\label{sec:latex-tips}
+
+%待续
+
+\chapter{Git 使用教程}%
+\label{cha:git-tips}
+
+\section{参考资料}%
+\label{sec:git-refs}
+
+\begin{itemize}
+    \item 官方网址： \href{https://git-scm.com/}{https://git-scm.com/}
+    \item 问答网站：
+        \href{https://stackoverflow.com/questions/tagged/git+github}
+        {https://stackoverflow.com/questions/tagged/git+github}
+    \item Git~ 教程：
+        \begin{itemize}
+            \item \href{https://git-scm.com/book/zh/v2}
+                {Pro Git 中文}
+                ~ \href{books/progit_v2.1.31_zh.pdf}{pdf 中文}
+                ~ \href{https://git-scm.com/book/en/v2} {Pro Git 英文}
+                 ~ \href{books/progit_v2.1.177_en.pdf}{pdf 英文}
+            \item \href{https://help.github.com/en/github}
+                {Github 帮助}
+        \end{itemize}
+\end{itemize}
+\section{常用配置}%
+\label{sec:git-settings}
+
+\subsection{Github 的注册和 SSH 设置}%
+\label{sub:git-ssh}
+
+设置步骤：
+\begin{itemize}
+    \item 在 \href{https://github.com/}{https://github.com/}
+        上登陆（注册并登陆）你的账户。
+        假设你在 \lstinline{github.com} 的用户名为 \lstinline{yourUsername},
+        你的电子邮件为 \lstinline{yourEmail}.
+    \item 新建在github上使用的公匙：
+        \begin{itemize}
+            \item 打开一个终端 (\lstinline{terminal});
+            \item 运行以下命令 (用你注册时的电子邮件账户替换
+                \lstinline{yourEmail});
+\begin{lstlisting}
+ssh-keygen -t rsa -C "yourEmail" -f ~/.ssh/github_ddpom_ganx
+\end{lstlisting}
+            \item 提示输入 \lstinline{passphrase}
+                时，可以留空，也可以输入你的 \lstinline{passphrase};
+            \item 运行以下命令，将公钥复制到剪切板;
+\begin{lstlisting}
+xclip -sel clip < ~/.ssh/github_ddpom_ganx.pub
+\end{lstlisting}
+            \item 粘贴剪切板里的内容到你的 GitHub 账户中的 SSH 公钥：
+                \begin{itemize}
+                    \item 访问 \href{https://github.com/settings/keys}
+                        {https://github.com/settings/keys},
+                        如果提示你登陆的话，请登陆；
+                    \item 点击右上角的 \lstinline{New SSH key} 后，
+                        粘贴剪切板里的内容到文本框。
+                \end{itemize}
+            \item 运行以下命令，测试你的 SSH 设置：
+\begin{lstlisting}
+ssh -T git@github.com
+\end{lstlisting}
+            \item 如果你看到如下信息，你的设置就成功了。
+\begin{lstlisting}
+Hi yourUsername! You've successfully authenticated, but GitHub does not provide shell access.
+\end{lstlisting}
+        \end{itemize}
+\end{itemize}
+
+\subsection{在虚拟机中设置用户名和电子邮件}%
+\label{sub:git-user-info}
+
+\begin{enumerate}
+    \item 用 \lstinline{gvim} 修改 \lstinline{~/.gitconfig_local}
+        （如果没有这个文件, \lstinline{gvim} 会新建这个文件并打开它）：
+\begin{lstlisting}[escapeinside=``]
+gvim ~/.gitconfig_local
+\end{lstlisting}
+    \item 写入下面的内容，用你个人的用户名和邮件地址替换相应的信息：
+\begin{lstlisting}[escapeinside=``]
+[user]
+	name = yourUsername
+	email = yourEmail
+
+[github]
+	user = yourUsername
+\end{lstlisting}
+\end{enumerate}
+
+%\section{Git 的简单介绍}%
+%\label{sec:git-intro}
+%
+%待续
+%
+%\section{Git 的学习方式}%
+%\label{sec:git-learning}
+%
+%待续
+%
+\section{常用操作}%
+\label{sec:git-tips}
+%
+%待续
+
+\chapter{论文写作工具}%
+\label{cha:tools-writing}
+
+\section{Zotero 文献管理}%
+\label{sec:citation-zotero}
+
+\section{Ludwig 英文语句搜索引擎}%
+\label{sec:writing-ludwig}
+
+Ludwig 英文语句搜索引擎可以帮助研究者选择适用的词句。现在以一个标题为例:
+Solving a Perishables Joint Pricing and Inventory Control Problem
+with \ldots.
+对于一个以英语为母语或者工作语言的人来看，这个标题是有点问题的。
+对于不常用英文写作的研究者，也是情有可原。
+为了提高英文写作水平，可以考虑使用
+\href{https://ludwig.guru/}{ludwig.guru/} 来搜索文献中使用相关词汇的语句。
+
+如果我们对 Perishables Joint Pricing and Inventory Control
+不确定正确与否，可以在搜索框中查看英文文献中对这个短语的使用情况，参见图
+\ref{fig:ludwig-search}。
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-13-03.png}
+  \caption{搜索 Perishables Joint Pricing and Inventory Control}
+  \label{fig:ludwig-search}
+\end{figure}
+
+从图 \ref{fig:ludwig-result-1} 及 \ref{fig:ludwig-result-2}
+可以看到，搜索的结果不理想。
+因为 Ludwig 使用的语言资料库太大，搜索结果不理想时可以考虑缩小搜索范围。
+注意到缺省情况下筛选功能是关闭了的（可以看到 filter OFF
+字样），我们可以打开筛选选项，根据实际情况选择搜索范围。详情参见图
+\ref{fig:ludwig-filter}.
+
+令人遗憾的是，搜索结果任然不理想（见图
+\ref{fig:ludwig-result-3}），没有看到完整的匹配，只看到左中位置显示的 60
+SIMILAR.
+这时，我们可以考虑搜索更少的关键词。
+从搜索结果中，我们发现 Perishables
+和其它关键词甚少关联，可以考虑去掉这个关键词后重新搜索。
+搜索结果见图 \ref{fig:ludwig-result-4},
+我们可以看到仍然没有得到完美匹配，只看到 60 SIMILAR.
+但令人欣慰的是，在第一个结果中，我们看到了除大小写外的完美匹配。
+可以理解成这个搜索是大小写敏感的。
+这时我们可以考虑把搜索框中的大写字母全部改成小写字母来搜索。
+搜索结果见图 \ref{fig:ludwig-result-5}, 我们可以看到两个完美匹配
+(2 EXACT).
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-16-43.png}
+  \caption{搜索结果 1}
+  \label{fig:ludwig-result-1}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-16-55.png}
+  \caption{搜索结果 2}
+  \label{fig:ludwig-result-2}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-17-32.png}
+  \caption{筛选搜索范围}
+  \label{fig:ludwig-filter}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-18-09.png}
+  \caption{搜索结果 3}
+  \label{fig:ludwig-result-3}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-19-22.png}
+  \caption{去掉 Perashables 后的搜索结果}
+  \label{fig:ludwig-result-4}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1.0\textwidth]{screenshots/Screenshot from
+  2019-12-23 21-20-01.png}
+  \caption{去掉 Perashables 后且使用小写字母的搜索结果}
+  \label{fig:ludwig-result-5}
+\end{figure}
+
+%\nocite{*}
+
+%\bibliography{reference}
+
+%\appendix
+
+\end{document}
