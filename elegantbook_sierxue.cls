@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%
 % % !Mode:: "TeX:UTF-8"
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{elegantbook}[2019/08/18 v3.09 ElegantBook document class]
+\ProvidesClass{elegantbook_sierxue}[2019/08/18 v3.09 ElegantBook document class] % ganx Change {elegantbook} to {elegantbook_sierxue}.
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -48,6 +48,8 @@
 
 \DeclareVoidOption{normal}{\ekv{device=normal}}
 \DeclareVoidOption{pad}{\ekv{device=pad}}
+\DeclareVoidOption{phone}{\ekv{device=phone}} % ganx Add this line.
+\DeclareVoidOption{phonePortrait}{\ekv{device=phonePortrait}} % ganx Add this line.
 
 \DeclareVoidOption{numbers}{\ekv{cite=numbers}}
 \DeclareVoidOption{authoryear}{\ekv{cite=authoryear}}
@@ -103,6 +105,22 @@
   headheight=2.17cm,
   footskip=4mm
 }}{\relax}
+
+% ganx Add a block. Begin
+\ifdefstring{\ELEGANT@device}{phone}{
+\geometry{
+  a5paper,
+  margin=12mm,
+}}{\relax}
+% ganx Add a block. End
+
+% ganx Add a block. Begin
+\ifdefstring{\ELEGANT@device}{phonePortrait}{
+\geometry{
+  a6paper,
+  margin=11mm,
+}}{\relax}
+% ganx Add a block. End
 
 \RequirePackage{indentfirst,comment}
 % fontsetting
@@ -379,7 +397,7 @@
 
 
 %%define the note and proof environment
-\RequirePackage{pifont,manfnt,bbding}
+\RequirePackage{fontawesome,pifont,manfnt,bbding} % ganx Insert fontawesome.
 % list/itemize/enumerate setting
 \RequirePackage[shortlabels]{enumitem}
 \setlist{nolistsep}
@@ -581,9 +599,19 @@
 
 
 
-\newenvironment{note}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\textdbend\quad}\textbf{\color{second}%
+\newenvironment{note}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\faWarning\quad}\textbf{\color{second}% % ganx Change textdbend to dbend.
   \ifdefstring{\ELEGANT@lang}{en}{Note}{注意}\,
 }}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
+
+% ganx Add a block. Begin
+\newenvironment{tip}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\faStarO\quad}\textbf{\color{second}%
+  \ifdefstring{\ELEGANT@lang}{en}{Tip}{提示}\,
+}}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
+
+\newenvironment{share}{\par\noindent{\makebox[0pt][r]{\scriptsize\color{red!90}\manerrarrow\quad}\textbf{\color{second}%
+  \ifdefstring{\ELEGANT@lang}{en}{Tip}{分享}\,
+}}\ifdefstring{\ELEGANT@lang}{en}{\itshape}{\kaishu}}{\par}
+% ganx Add a block. End
 
 \newenvironment{proof}{\par\noindent\textbf{\color{second}%
   \ifdefstring{\ELEGANT@lang}{en}{Proof}{证明}\;
@@ -706,21 +734,65 @@
 }
 \def \ifempty#1{\def\temp{#1} \ifx\temp\empty }
 
+% ganx Comment a block. Begin
+% \newcommand*{\logo}[1]{
+%  \def\@logo{\includegraphics[width=4.2cm]{#1}
+%  }
+% }
+% \ifdefstring{\ELEGANT@device}{normal}{
+% \newcommand*{\cover}[1]{
+%  \def\@cover{\includegraphics[width=\linewidth]{#1}
+%  }
+% }}{\relax}
+%
+% \ifdefstring{\ELEGANT@device}{pad}{
+% \newcommand*{\cover}[1]{
+%  \def\@cover{\includegraphics[trim=0 26bp 0 26bp,clip=true, width=\linewidth]{#1}
+%  }
+% }}{\relax}
+% ganx Comment a block. End
+
+% ganx Add a block to replace the blcok above. Begin
+\ifdefstring{\ELEGANT@device}{normal}{
 \newcommand*{\logo}[1]{
  \def\@logo{\includegraphics[width=4.2cm]{#1}
  }
 }
-\ifdefstring{\ELEGANT@device}{normal}{
 \newcommand*{\cover}[1]{
  \def\@cover{\includegraphics[width=\linewidth]{#1}
  }
 }}{\relax}
 
 \ifdefstring{\ELEGANT@device}{pad}{
+\newcommand*{\logo}[1]{
+ \def\@logo{\includegraphics[width=4.2cm]{#1}
+ }
+}
 \newcommand*{\cover}[1]{
  \def\@cover{\includegraphics[trim=0 26bp 0 26bp,clip=true, width=\linewidth]{#1}
  }
 }}{\relax}
+
+\ifdefstring{\ELEGANT@device}{phone}{
+\newcommand*{\logo}[1]{
+ \def\@logo{
+ }
+}
+\newcommand*{\cover}[1]{
+ \def\@cover{
+ }
+}}{\relax}
+
+\ifdefstring{\ELEGANT@device}{phonePortrait}{
+\newcommand*{\logo}[1]{
+ \def\@logo{
+ }
+}
+\newcommand*{\cover}[1]{
+ \def\@cover{
+ }
+}}{\relax}
+% ganx Add a block to replace the blcok above. End
 
 \renewcommand{\baselinestretch}{1.35} 
 
@@ -748,7 +820,7 @@
     {\renewcommand{\arraystretch}{0.618}
     \begin{tabular}{l} 
       \ifdefstring{\ELEGANT@lang}{en}{\textbf{Author:}}{\kaishu 作者：} \@author \\
-      \ifdefstring{\ELEGANT@lang}{en}{\textbf{Institute:}}{\kaishu 组织：} \the\institute\\
+      % \ifdefstring{\ELEGANT@lang}{en}{\textbf{Institute:}}{\kaishu 组织：} \the\institute\\ % ganx Comment out this line.
       \ifdefstring{\ELEGANT@lang}{en}{\textbf{Date:}}{\kaishu 时间：} \@date\\
       \ifdefstring{\ELEGANT@lang}{en}{\textbf{Version:}}{\kaishu 版本：} \the\version\\
     \end{tabular}}
