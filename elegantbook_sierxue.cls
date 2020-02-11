@@ -598,6 +598,18 @@
    }
 
 %% Exercise with counter
+\newcounter{cast}[chapter]
+\setcounter{cast}{0}
+\renewcommand{\thecast}{\thechapter.\arabic{cast}}
+\newenvironment{cast}[1][]{
+     \refstepcounter{cast}\par\noindent\makebox[-3pt][r]{\scriptsize\color{red!90}\faYoutubePlay\quad}\textbf{\color{main}{%
+       \ifdefstring{\ELEGANT@lang}{en}{Screencast}{演示}
+     }\thecast #1 \,}\rmfamily %
+   }{
+     \par\medskip\ignorespacesafterend %
+   }
+
+%% Exercise with counter
 \newcounter{prob}[chapter]
 \setcounter{prob}{0}
 \renewcommand{\theprob}{\thechapter.\arabic{prob}}
