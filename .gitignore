@@ -14,10 +14,12 @@
 *.cb
 *.cb2
 .*.lb
+clean.bat
 elegant*-cn.pdf
 elegant*-en.pdf
 elegantbook.pdf
 toolsRes.pdf
+*.dates
 
 ## Intermediate documents:
 *.dvi
