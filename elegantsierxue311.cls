@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%
 % % !Mode:: "TeX:UTF-8"
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{elegantbook}[2020/04/12 v3.11 ElegantBook document class]
+\ProvidesClass{elegantsierxue311}[2020/04/12 v3.11 ElegantBook document class]
 
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
@@ -52,6 +52,7 @@
 
 \DeclareVoidOption{normal}{\ekv{device=normal}}
 \DeclareVoidOption{pad}{\ekv{device=pad}}
+\DeclareVoidOption{phone}{\ekv{device=phone}}
 
 \DeclareStringOption[numbers]{cite}
 \DeclareVoidOption{numbers}{\ekv{cite=numbers}}
@@ -127,6 +128,12 @@
   margin=16mm,
   headheight=2.17cm,
   footskip=4mm
+}}{\relax}
+
+\ifdefstring{\ELEGANT@device}{phone}{
+\geometry{
+  a5paper,
+  margin=14mm,
 }}{\relax}
 
 \RequirePackage{indentfirst,comment}
@@ -365,6 +372,8 @@
   \ifdefstring{\ELEGANT@cite}{numbers}{
     \citestyle{numbers}}{\relax}
   \newcommand{\notename}{笔记}
+  \newcommand{\tipname}{提示}
+  \newcommand{\sharename}{分享}
   \renewcommand*{\proofname}{证明}
   \newcommand{\problemname}{例题}
   \newcommand{\definitionname}{定义}
@@ -374,8 +383,10 @@
   \newcommand{\lemmaname}{引理}
   \newcommand{\propositionname}{命题}
   \newcommand{\corollaryname}{推论}
+  \newcommand{\learningname}{{\LaTeX} 知识点}
   \newcommand{\examplename}{例}
   \newcommand{\exercisename}{练习}
+  \newcommand{\castname}{演示}
   \newcommand{\remarkname}{注}
   \newcommand{\assumptionname}{假设}
   \newcommand{\conclusionname}{结论}
@@ -397,6 +408,8 @@
   \newcommand{\versionname}{\textbf{Version: }}
   \bibliographystyle{\ELEGANT@bibstyle}
   \newcommand{\notename}{Note}
+  \newcommand{\tipname}{Tip}
+  \newcommand{\sharename}{Tip}
   \newcommand{\proofname}{Proof}
   \newcommand{\problemname}{Problem}
   \newcommand{\definitionname}{Definition}
@@ -407,7 +420,9 @@
   \newcommand{\propositionname}{Proposition}
   \newcommand{\corollaryname}{Corollary}
   \newcommand{\examplename}{Example}
+  \newcommand{\learningname}{{\LaTeX} Learning}
   \newcommand{\exercisename}{Exercise}
+  \newcommand{\castname}{Screencast}
   \newcommand{\remarkname}{Remark}
   \newcommand{\assumptionname}{Assumption}
   \newcommand{\conclusionname}{Conclusion}
@@ -511,7 +526,7 @@
 %\titlespacing{\subsection}{0pt}{0.5\baselineskip}{-\baselineskip}
 
 %%define the note and proof environment
-\RequirePackage{pifont,manfnt,bbding}
+\RequirePackage{fontawesome,pifont,manfnt,bbding}
 
 \RequirePackage[many]{tcolorbox}
 
@@ -636,6 +651,15 @@
 % second（orange-thm）: proof note remark  
 % third（blue-prop):  assumptions property conclusion custom
 
+%% Latex with counter
+\newcounter{tex}[chapter]
+\setcounter{tex}{0}
+\renewcommand{\thetex}{\thechapter.\arabic{tex}}
+\newenvironment{latex}[1][]{
+  \refstepcounter{tex}
+  \par\noindent\textbf{\color{main}{\learningname}\thetex #1 }\rmfamily}{
+  \par\ignorespacesafterend}
+
 %% Example with counter
 \newcounter{exam}[chapter]
 \setcounter{exam}{0}
@@ -656,6 +680,23 @@
     \textbf{\color{main}{\exercisename} \theexer #1 }\rmfamily}{
     \par\ignorespacesafterend}
 
+%% Exercise with counter
+\newcounter{cast}[chapter]
+\setcounter{cast}{0}
+\renewcommand{\thecast}{\thechapter.\arabic{cast}}
+\newenvironment{cast}[1][]{
+  \refstepcounter{cast}
+  \par\noindent\makebox[-3pt][r]{
+    \scriptsize\color{red!90}\faYoutubePlay\quad}
+    \textbf{\color{main}{\castname}\thecast}\rmfamily}{
+    \par\ignorespacesafterend}
+%      \refstepcounter{cast}\par\noindent\makebox[-3pt][r]{\scriptsize\color{red!90}\faYoutubePlay\quad}\textbf{\color{main}{%
+%        \ifdefstring{\ELEGANT@lang}{en}{Screencast}{演示}
+%      }\thecast #1 \,}\rmfamily %
+%    }{
+%      \par\medskip\ignorespacesafterend %
+%    }
+
 %% Problem with counter
 \newcounter{prob}[chapter]
 \setcounter{prob}{0}
@@ -667,8 +708,18 @@
 
 \newenvironment{note}{
   \par\noindent\makebox[-3pt][r]{
-    \scriptsize\color{red!90}\textdbend\quad}
+    \scriptsize\color{red!90}\faWarning\quad}
     \textbf{\color{second}\notename} \citshape}{\par}
+
+\newenvironment{tip}{
+  \par\noindent\makebox[-3pt][r]{
+    \scriptsize\color{red!90}\faStar\quad}
+    \textbf{\color{second}\tipname} \citshape}{\par}
+
+\newenvironment{share}{
+  \par\noindent\makebox[-3pt][r]{
+    \scriptsize\color{red!90}\manerrarrow\quad}
+    \textbf{\color{second}\sharename} \citshape}{\par}
 
 \newenvironment{proof}{
   \par\noindent\textbf{\color{second}\proofname\;}
