@@ -1,3 +1,6 @@
 [submodule "media-toolsRes"]
 	path = media
 	url = https://gitee.com/sierxue/media-toolsRes.git
+[submodule "books"]
+	path = books
+	url = https://gitee.com/sierxue/books-toolsRes.git
