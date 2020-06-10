@@ -1,0 +1,3 @@
+[submodule "media-toolsRes"]
+	path = media
+	url = https://gitee.com/sierxue/media-toolsRes.git
